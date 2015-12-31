@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Infinity
 {
@@ -97,22 +98,10 @@ namespace Infinity
 
         private static string[] GetBuildLevels()
         {
-            List<string> levels = new List<string>();
-
-            foreach (var scene in EditorBuildSettings.scenes)
-            {
-                if (scene == null)
-                {
-                    continue;
-                }
-
-                if (scene.enabled)
-                {
-                    levels.Add(scene.path);
-                }
-            }
-
-            return levels.ToArray();
+            return EditorBuildSettings.scenes
+                .Where(s => s.enabled)
+                .Select(s => s.path)
+                .ToArray();
         }
     }
 }
