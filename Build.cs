@@ -18,6 +18,8 @@ namespace Infinity
                 case BuildTarget.StandaloneWindows64:
                     SetWindows(ref config);
                     break;
+                case BuildTarget.StandaloneOSXIntel:
+                case BuildTarget.StandaloneOSXIntel64:
                 case BuildTarget.StandaloneOSXUniversal:
                     SetOSX(ref config);
                     break;
@@ -51,6 +53,11 @@ namespace Infinity
                 SetRelease(ref config);
             }
 
+            // Check
+            if (!System.IO.Directory.Exists (config.path)) {
+                System.IO.Directory.CreateDirectory (config.path);
+            }
+
             // Build
             var levels = GetBuildLevels();
             BuildPipeline.BuildPlayer(levels, config.path, config.target, config.options);
@@ -73,7 +80,7 @@ namespace Infinity
 
         private static void SetiOS(ref BuildConfig config)
         {
-            config.path = buildRoot + "iOS/" + PlayerSettings.productName + ".app";
+            config.path = buildRoot + "iOS/";
             config.target = BuildTarget.iOS;
             config.options = BuildOptions.Il2CPP;
         }
