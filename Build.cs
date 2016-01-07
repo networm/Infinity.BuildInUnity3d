@@ -8,7 +8,18 @@ namespace Infinity
     {
         private const string buildRoot = "Build/";
 
-        public static void BuildPlayer()
+        public static void BuildPlayerDevelop()
+        {
+            BuildPlayer(true);
+        }
+
+        public static void BuildPlayerRelease()
+        {
+            BuildPlayer(false);
+        }
+
+
+        private static void BuildPlayer(bool development)
         {
             var config = new BuildConfig();
 
@@ -31,17 +42,6 @@ namespace Infinity
                     break;
                 default:
                     break;
-            }
-
-            // Environment
-            bool development = false;
-            string[] args = System.Environment.GetCommandLineArgs();
-            foreach (var arg in args)
-            {
-                if (arg.ToLower() == "development")
-                {
-                    development = true;
-                }
             }
 
             if (development)
